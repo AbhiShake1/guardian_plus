@@ -1,0 +1,1 @@
+web: gunicorn guardian_plus.wgsi
