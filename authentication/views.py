@@ -9,7 +9,6 @@ from . import util
 
 @csrf_exempt
 def login(request: HttpRequest) -> HttpResponse:
-    print(request.user)
     if request.method == 'POST':
         import json
         post_data: dict[str, str] = json.loads(request.body.decode())
@@ -39,3 +38,15 @@ def signout(request: HttpRequest) -> HttpResponse:
         auth.logout(request.user)
         return HttpResponse('Successfully logged out')
     return HttpResponse('No user signed in', status=401)
+
+
+@csrf_exempt
+def update_password(request: HttpRequest) -> HttpResponse:
+    if request.method == 'PUT':
+        if request.user is not None:
+            import json
+            post_data = json.loads(request.body.decode())
+            request.user.set_password(post_data['password'])
+            return HttpResponse('Successfully updated')
+        return HttpResponse('No user signed in', status=401)
+    return HttpResponse('<h2>Wrong request. Only PUT allowed</h2>', status=403)
