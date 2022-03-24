@@ -1,5 +1,5 @@
-from django.db.models import *
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.db.models import *
 
 
 # Create your models here.
@@ -31,7 +31,7 @@ class Child(Model):
 class ProgressReport(Model):
     student_and_subject = ForeignKey('ChildSubject', on_delete=CASCADE)
     term = PositiveIntegerField(default=0, validators=[MinValueValidator(1), MaxValueValidator(4)])
-    marks = PositiveIntegerField(default=0)
+    marks = PositiveIntegerField(default=0, validators=[MaxValueValidator(100)])
 
     def __str__(self):
         return self.student_and_subject
