@@ -2,7 +2,6 @@ from django.contrib import auth
 from django.contrib.auth.models import User
 from django.http import HttpRequest, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-
 from guardian_plus.settings import RESPONSE_HEADERS
 from . import util
 
@@ -29,14 +28,14 @@ def login(request: HttpRequest) -> HttpResponse:
 
 @csrf_exempt
 def current_user(request: HttpRequest) -> HttpResponse:
-    return HttpResponse(request.user.username)
+    return HttpResponse(request.user.username, headers=RESPONSE_HEADERS)
 
 
 @csrf_exempt
 def signout(request: HttpRequest) -> HttpResponse:
     if request.user is not None:
         auth.logout(request.user)
-        return HttpResponse('Successfully logged out')
+        return HttpResponse('Successfully logged out', headers=RESPONSE_HEADERS)
     return HttpResponse('No user signed in', status=401)
 
 
@@ -47,6 +46,6 @@ def update_password(request: HttpRequest) -> HttpResponse:
             import json
             post_data = json.loads(request.body.decode())
             request.user.set_password(post_data['password'])
-            return HttpResponse('Successfully updated')
+            return HttpResponse('Successfully updated', headers=RESPONSE_HEADERS)
         return HttpResponse('No user signed in', status=401)
     return HttpResponse('<h2>Wrong request. Only PUT allowed</h2>', status=403)

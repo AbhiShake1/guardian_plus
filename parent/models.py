@@ -1,4 +1,3 @@
-from django.conf.global_settings import AUTH_USER_MODEL
 from django.db.models import *
 from django.core.validators import MaxValueValidator, MinValueValidator
 
@@ -23,7 +22,7 @@ class ChildSubject(Model):
 class Child(Model):
     name = CharField(max_length=255)
     current_class = PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(12)])
-    parent = ForeignKey(AUTH_USER_MODEL, on_delete=CASCADE, default='')
+    parent = ForeignKey('auth.User', on_delete=CASCADE, default='')
 
     def __str__(self):
         return f'{self.name} {self.id}'
