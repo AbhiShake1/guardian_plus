@@ -1,3 +1,4 @@
+from django.conf.global_settings import AUTH_USER_MODEL
 from django.db.models import *
 
 
@@ -21,14 +22,7 @@ class ChildSubject(Model):
 class Child(Model):
     name = CharField(max_length=255)
     current_class = PositiveIntegerField()
-    parent = ForeignKey('Parent', on_delete=CASCADE, default='')
-
-    def __str__(self):
-        return f'{self.name} {self.id}'
-
-
-class Parent(Model):
-    name = CharField(max_length=255)
+    parent = ForeignKey(AUTH_USER_MODEL, on_delete=CASCADE, default='')
 
     def __str__(self):
         return f'{self.name} {self.id}'
