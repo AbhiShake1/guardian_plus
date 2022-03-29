@@ -1,5 +1,3 @@
-import json
-
 from django.contrib import auth
 from django.contrib.auth.models import User
 from django.http import HttpRequest, HttpResponse
@@ -11,8 +9,10 @@ from . import util
 @csrf_exempt
 def login(request: HttpRequest) -> HttpResponse:
     if request.method == 'POST':
-        uid: str = str(request.POST['uid'])
-        password: str = str(request.POST['password'])
+        import json
+        post_data: dict[str, str] = json.loads(request.body.decode())
+        uid: str = post_data['uid']
+        password: str = post_data['password']
         user: User = util.login(uid, password)
         if user is None:
             return HttpResponse('Invalid credentials', status=401)
