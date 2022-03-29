@@ -9,10 +9,8 @@ from . import util
 @csrf_exempt
 def login(request: HttpRequest) -> HttpResponse:
     if request.method == 'POST':
-        import json
-        post_data: dict[str, str] = json.loads(request.body.decode())
-        uid: str = post_data['uid']
-        password: str = post_data['password']
+        uid: str = str(request.POST['uid'])
+        password: str = str(request.POST['password'])
         user: User = util.login(uid, password)
         if user is None:
             return HttpResponse('Invalid credentials', status=401)
