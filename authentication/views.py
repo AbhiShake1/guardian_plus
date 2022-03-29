@@ -18,9 +18,9 @@ def login(request: HttpRequest) -> HttpResponse:
             return HttpResponse('Invalid credentials', status=401)
         auth.login(request, user)
         data: dict[str, str] = {
-            'uid': uid,
-            'is_staff': user.is_staff,
-            'is_superuser': user.is_superuser,
+            'userId': uid,
+            'isStaff': user.is_staff,
+            'isSuperuser': user.is_superuser,
         }
         return HttpResponse(json.dumps(data), headers=RESPONSE_HEADERS)
     return HttpResponse('<h2>Bad Request. Only POST allowed</h2>', status=403)
