@@ -34,4 +34,4 @@ class ProgressReport(Model):
     marks = PositiveIntegerField(default=0, validators=[MaxValueValidator(100)])
 
     def __str__(self):
-        return self.student_and_subject
+        return str(self.student_and_subject)

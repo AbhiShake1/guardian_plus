@@ -2,6 +2,7 @@ import json
 
 from django.contrib.auth.models import User
 from django.http import HttpRequest, HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 
 from .models import *
 
@@ -15,10 +16,11 @@ def get_children(request: HttpRequest) -> HttpResponse:
     return HttpResponse('No current user found', status=401)
 
 
+@csrf_exempt
 def get_child_subjects(request: HttpRequest) -> HttpResponse:
     if request.method == 'POST':
         import json
-        parent: User = User.objects.get(userId=json.loads(request.body.decode())['uid'])
+        parent: User = User.objects.get(username=json.loads(request.body.decode())['uid'])
         if parent is not None:
             children: list = parent.child_set.all()
             subjects: dict[str, list[str]] = {}
@@ -30,6 +32,27 @@ def get_child_subjects(request: HttpRequest) -> HttpResponse:
                         subjects[str(c.child_name)] += [c.subject]
                     else:
                         subjects[str(c.child_name)] = [c.subject]
+            return HttpResponse(json.dumps(subjects, default=str))
+        return HttpResponse('No such user found', status=401)
+    return HttpResponse('Bad reuqest. Only POST allowed', status=401)
+
+
+@csrf_exempt
+def get_child_progress(request: HttpRequest) -> HttpResponse:
+    if request.method == 'POST':
+        import json
+        parent: User = User.objects.get(username=json.loads(request.body.decode())['uid'])
+        if parent is not None:
+            children: list = parent.child_set.all()
+            subjects: dict[str, list[dict[str, str]]] = {}
+            for child in children:
+                current_child: QuerySet = child.childsubject_set.all()
+                for c in current_child:
+                    for pr in c.progressreport_set.all():
+                        if str(c.child_name) in subjects:
+                            subjects[str(c.child_name)] += [{str(c.subject): {'term': pr.term, 'marks': pr.marks}}]
+                        else:
+                            subjects[str(c.child_name)] = [{str(c.subject): {'term': pr.term, 'marks': pr.marks}}]
             return HttpResponse(json.dumps(subjects, default=str))
         return HttpResponse('No such user found', status=401)
     return HttpResponse('Bad reuqest. Only POST allowed', status=401)
