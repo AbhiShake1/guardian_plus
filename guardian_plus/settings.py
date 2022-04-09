@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'assessments.apps.ClassesConfig',
     'parent.apps.ParentConfig',
     'routine.apps.RoutineConfig',
+    'child.apps.ChildConfig',
+    'notice.apps.NoticeConfig',
 ]
 
 MIDDLEWARE = [

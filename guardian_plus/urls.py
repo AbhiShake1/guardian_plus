@@ -22,4 +22,6 @@ urlpatterns = [
     path('api=assessments/', include('assessments.urls')),
     path('api=parent/', include('parent.urls')),
     path('api=routine/', include('routine.urls')),
+    path('api=notice/', include('notice.urls')),
+    path('api=child/', include('child.urls')),
 ]

@@ -2,7 +2,9 @@ from django.contrib import auth
 from django.contrib.auth.models import User
 from django.http import HttpRequest, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+
 from guardian_plus.settings import RESPONSE_HEADERS
+from parent.models import Parent
 from . import util
 
 
@@ -17,12 +19,17 @@ def login(request: HttpRequest) -> HttpResponse:
         if user is None:
             return HttpResponse('Invalid credentials', status=401)
         auth.login(request, user)
+        parent: Parent = user.child.parent
         data: dict[str, str] = {
             'userId': uid,
+            'grade': user.child.grade,
+            'parent': parent.name,
+            'address': parent.address,
+            'phoneNo': parent.contactInfo,
             'isStaff': user.is_staff,
             'isSuperuser': user.is_superuser,
         }
-        return HttpResponse(json.dumps(data), headers=RESPONSE_HEADERS)
+        return HttpResponse(json.dumps(data, default=str), headers=RESPONSE_HEADERS)
     return HttpResponse('<h2>Bad Request. Only POST allowed</h2>', status=403)
 
 

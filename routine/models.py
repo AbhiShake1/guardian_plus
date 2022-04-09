@@ -1,10 +1,10 @@
 from django.db.models import *
 
-# Create your models here.
-from parent.models import Subject
+from child.models import Subject, Grade
 
 
 class Routine(Model):
+    grade = ForeignKey(Grade, on_delete=CASCADE, default=1)
     first = ForeignKey(Subject, on_delete=CASCADE, related_name='first_period')
     second = ForeignKey(Subject, on_delete=CASCADE, related_name='second_period')
     third = ForeignKey(Subject, on_delete=CASCADE, related_name='third_period')
