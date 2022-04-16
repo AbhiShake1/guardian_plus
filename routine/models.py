@@ -16,4 +16,4 @@ class Routine(Model):
     ninth = ForeignKey(Subject, on_delete=CASCADE, related_name='ninth_period')
 
     def __str__(self):
-        return str(self.id)
+        return str(self.grade)
