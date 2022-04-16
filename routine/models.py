@@ -4,6 +4,7 @@ from child.models import Subject, Grade
 
 
 class Routine(Model):
+    day = CharField(max_length=10, default='Sunday')
     grade = ForeignKey(Grade, on_delete=CASCADE, default=1)
     first = ForeignKey(Subject, on_delete=CASCADE, related_name='first_period')
     second = ForeignKey(Subject, on_delete=CASCADE, related_name='second_period')
