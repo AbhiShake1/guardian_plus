@@ -25,6 +25,7 @@ class Grade(Model):
 class Child(Model):
     child = OneToOneField(User, on_delete=CASCADE, default='not set')
     parent = ForeignKey(Parent, on_delete=CASCADE, default='not set')
+    school = CharField(max_length=200, default='')
     grade = ForeignKey(Grade, on_delete=CASCADE, default=1)
 
     def __str__(self):

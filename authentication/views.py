@@ -28,6 +28,7 @@ def login(request: HttpRequest) -> HttpResponse:
             'phoneNo': parent.contactInfo,
             'isStaff': user.is_staff,
             'isSuperuser': user.is_superuser,
+            'school': user.child.school,
         }
         return HttpResponse(json.dumps(data, default=str), headers=RESPONSE_HEADERS)
     return HttpResponse('<h2>Bad Request. Only POST allowed</h2>', status=403)
