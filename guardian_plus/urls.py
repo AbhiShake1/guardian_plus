@@ -24,4 +24,5 @@ urlpatterns = [
     path('api=routine/', include('routine.urls')),
     path('api=notice/', include('notice.urls')),
     path('api=child/', include('child.urls')),
+    path('api=feedback/', include('feedback.urls')),
 ]

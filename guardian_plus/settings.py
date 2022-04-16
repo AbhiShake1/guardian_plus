@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'routine.apps.RoutineConfig',
     'child.apps.ChildConfig',
     'notice.apps.NoticeConfig',
+    'feedback.apps.FeedbackConfig',
 ]
 
 MIDDLEWARE = [
