@@ -25,4 +25,5 @@ urlpatterns = [
     path('api=notice/', include('notice.urls')),
     path('api=child/', include('child.urls')),
     path('api=feedback/', include('feedback.urls')),
+    path('api=forgot_password/', include('password_reset.urls')),
 ]
