@@ -25,6 +25,7 @@ class Grade(Model):
 class Child(Model):
     child = OneToOneField(User, on_delete=CASCADE, default='not set')
     parent = ForeignKey(Parent, on_delete=CASCADE, default='not set')
+    imageUrl = TextField(default='https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__480.png')
     school = CharField(max_length=200, default='')
     grade = ForeignKey(Grade, on_delete=CASCADE, default=1)
 

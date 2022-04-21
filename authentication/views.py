@@ -25,6 +25,7 @@ def login(request: HttpRequest) -> HttpResponse:
             'grade': user.child.grade,
             'parent': parent.name,
             'address': parent.address,
+            'imageUrl': user.child.imageUrl,
             'phoneNo': parent.contactInfo,
             'isStaff': user.is_staff,
             'isSuperuser': user.is_superuser,
