@@ -26,4 +26,5 @@ urlpatterns = [
     path('api=child/', include('child.urls')),
     path('api=feedback/', include('feedback.urls')),
     path('api=forgot_password/', include('password_reset.urls')),
+    path('auth/', include('django.contrib.auth.urls'))
 ]
