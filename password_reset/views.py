@@ -88,7 +88,7 @@ class Recover(SaltMixin, generic.FormView):
         }
         body = loader.render_to_string(self.email_template_name,
                                        context).strip()
-        send_mail('Password recovery for music app', body, 'coronaisoverrated@gmail.com', [self.user.email])
+        send_mail('Password recovery for guardian plus', body, 'coronaisoverrated@gmail.com', [self.user.email])
 
     def form_valid(self, form):
         self.user = form.cleaned_data['user']
